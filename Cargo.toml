@@ -1,7 +1,13 @@
 [package]
 name = "comb"
 version = "0.1.0"
+authors = ["Hunter Wittenborn <hunter@hunterwittenborn.com"]
 edition = "2021"
+description = "CLI for the Handlebars templating engine"
+repository = "https://github.com/hwittenborn/comb"
+license = "GPL-3.0-or-later"
+keywords = ["handlebars", "template"]
+categories = ["command-line-utilities", "template-engine"]
 
 [dependencies]
 clap = { version = "3.2.20", features = ["cargo"] }
