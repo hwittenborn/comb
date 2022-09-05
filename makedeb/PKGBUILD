@@ -4,7 +4,7 @@ pkgver=0.1.0
 pkgrel=1
 pkgdesc='CLI for the Handlebars templating engine'
 arch=('any')
-makedepends=('rustc')
+makedepends=('cargo')
 license=('GPL3')
 url='https://github.com/hwittenborn/comb'
 
