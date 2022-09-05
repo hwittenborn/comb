@@ -10,7 +10,7 @@ local deploy() = {
             commands: [
                 "sudo chown 'makedeb:makedeb' ./ -R",
                 ".drone/scripts/setup-pbmpr.sh",
-                "sudo apt-get install rustup -y",
+                "sudo apt-get install cargo -y",
                 "cargo fmt --check",
                 "cargo clippy -- -D warnings"
             ]
