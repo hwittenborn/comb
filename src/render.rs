@@ -28,15 +28,17 @@ pub fn render(app: &clap::ArgMatches) {
     data.insert("env".to_string(), env_data);
 
     // Render the template.
-    let handlebars = Handlebars::new();
+    let mut handlebars = Handlebars::new();
+    handlebars.set_strict_mode(true);
 
     let rendered_string = match handlebars.render_template(&file_content, &data) {
         Ok(rendered_string) => rendered_string,
-        Err(err) => {
-            message::error(&format!("{}", err));
+        Err(mut err) => {
+            err.template_name = Some(file_arg.clone());
+            message::error(&format!("{}\n", err));
             quit::with_code(exitcode::USAGE);
         }
     };
 
-    println!("{}", rendered_string);
+    print!("{}", rendered_string);
 }

@@ -22,6 +22,7 @@ local deploy() = {
 	        environment: {
 		        github_api_key: {from_secret: "github_api_key"}
 	        },
+            depends_on: ["run-tests"],
             commands: [".drone/scripts/create-release.sh"]
         },
 
@@ -31,7 +32,23 @@ local deploy() = {
 	        environment: {
 	            ssh_key: {from_secret: "ssh_key"}
 	        },
+            depends_on: ["create-release"],
             commands: [".drone/scripts/publish-mpr.sh"]
+        },
+
+        {
+            name: "publish-crates-io",
+            image: "proget.makedeb.org/docker/makedeb/makedeb:ubuntu-jammy",
+	        environment: {
+	            CARGO_REGISTRY_TOKEN: {from_secret: "crates_api_key"}
+	        },
+            depends_on: ["create-release"],
+            commands: [
+                "rm makedeb/comb -rf",
+                ".drone/scripts/setup-pbmpr.sh",
+                "sudo apt install cargo -y",
+                "cargo publish"
+            ]
         }
     ]
 };
